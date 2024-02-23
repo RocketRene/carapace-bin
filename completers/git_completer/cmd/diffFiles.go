@@ -76,7 +76,7 @@ func init() {
 	diffFilesCmd.Flags().Bool("no-prefix", false, "Do not show any source or destination prefix")
 	diffFilesCmd.Flags().Bool("no-relative", false, "Do not show relative pathnames")
 	diffFilesCmd.Flags().Bool("no-rename-empty", false, "Whether to use empty blobs as rename source")
-	diffFilesCmd.Flags().Bool("no-renames", false, "xx    Turn off rename detection")
+	diffFilesCmd.Flags().Bool("no-renames", false, "Turn off rename detection")
 	diffFilesCmd.Flags().Bool("no-textconv", false, "Disallow external text conversion filters to be run when comparing binary files")
 	diffFilesCmd.Flags().Bool("numstat", false, "Show number of added and deleted lines in decimal notation")
 	diffFilesCmd.Flags().BoolP("ours", "2", false, "Diff against \"our branch\"")
@@ -110,19 +110,13 @@ func init() {
 	diffFilesCmd.Flags().String("ws-error-highlight", "", "Highlight whitespace errors in the context")
 	rootCmd.AddCommand(diffFilesCmd)
 
+	diffFilesCmd.Flag("color").NoOptDefVal = " "
+
 	carapace.Gen(diffFilesCmd).FlagCompletion(carapace.ActionMap{
-		"O":                        carapace.ActionValues(),
-		"G":                        carapace.ActionValues(),
-		"S":                        carapace.ActionValues(),
-		"l":                        carapace.ActionValues(),
-		"abbrev":                   carapace.ActionValues(),
-		"anchored":                 carapace.ActionValues(),
-		"break-rewrites":           carapace.ActionValues(),
-		"color":                    carapace.ActionValues(),
-		"color-moved":              carapace.ActionValues(),
-		"color-moved-ws":           carapace.ActionValues(),
-		"color-words":              carapace.ActionValues(),
-		"diff-algorithm":           carapace.ActionValues(),
+		"color":                    git.ActionColorModes(),
+		"color-moved":              git.ActionColorMovedModes(),
+		"color-moved-ws":           git.ActionColorMovedWsModes(),
+		"diff-algorithm":           git.ActionDiffAlgorithms(),
 		"diff-filter":              carapace.ActionValues(),
 		"dirstat":                  carapace.ActionValues(),
 		"dirstat-by-file":          carapace.ActionValues(),
