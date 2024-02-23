@@ -110,6 +110,47 @@ func init() {
 	diffFilesCmd.Flags().String("ws-error-highlight", "", "Highlight whitespace errors in the context")
 	rootCmd.AddCommand(diffFilesCmd)
 
+	carapace.Gen(diffFilesCmd).FlagCompletion(carapace.ActionMap{
+		"O":                        carapace.ActionValues(),
+		"G":                        carapace.ActionValues(),
+		"S":                        carapace.ActionValues(),
+		"l":                        carapace.ActionValues(),
+		"abbrev":                   carapace.ActionValues(),
+		"anchored":                 carapace.ActionValues(),
+		"break-rewrites":           carapace.ActionValues(),
+		"color":                    carapace.ActionValues(),
+		"color-moved":              carapace.ActionValues(),
+		"color-moved-ws":           carapace.ActionValues(),
+		"color-words":              carapace.ActionValues(),
+		"diff-algorithm":           carapace.ActionValues(),
+		"diff-filter":              carapace.ActionValues(),
+		"dirstat":                  carapace.ActionValues(),
+		"dirstat-by-file":          carapace.ActionValues(),
+		"dst-prefix":               carapace.ActionValues(),
+		"find-copies":              carapace.ActionValues(),
+		"find-object":              carapace.ActionValues(),
+		"find-renames":             carapace.ActionValues(),
+		"ignore-matching-lines":    carapace.ActionValues(),
+		"ignore-submodules":        carapace.ActionValues(),
+		"inter-hunk-context":       carapace.ActionValues(),
+		"line-prefix":              carapace.ActionValues(),
+		"no-indent-heuristic":      carapace.ActionValues(),
+		"output":                   carapace.ActionValues(),
+		"output-indicator-context": carapace.ActionValues(),
+		"output-indicator-new":     carapace.ActionValues(),
+		"output-indicator-old":     carapace.ActionValues(),
+		"relative":                 carapace.ActionValues(),
+		"rotate-to":                carapace.ActionValues(),
+		"skip-to":                  carapace.ActionValues(),
+		"src-prefix":               carapace.ActionValues(),
+		"stat":                     carapace.ActionValues(),
+		"submodule":                carapace.ActionValues(),
+		"unified":                  carapace.ActionValues(),
+		"word-diff":                carapace.ActionValues(),
+		"word-diff-regex":          carapace.ActionValues(),
+		"ws-error-highlight":       carapace.ActionValues(),
+	})
+
 	carapace.Gen(diffFilesCmd).PositionalAnyCompletion(
 		git.ActionChanges(git.ChangeOpts{Unstaged: true}).FilterArgs(),
 	)
