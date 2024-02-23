@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/rsteube/carapace"
+	"github.com/rsteube/carapace-bin/pkg/actions/tools/git"
 	"github.com/spf13/cobra"
 )
 
@@ -108,4 +109,8 @@ func init() {
 	diffFilesCmd.Flags().String("word-diff-regex", "", "Use <regex> to decide what a word is")
 	diffFilesCmd.Flags().String("ws-error-highlight", "", "Highlight whitespace errors in the context")
 	rootCmd.AddCommand(diffFilesCmd)
+
+	carapace.Gen(diffFilesCmd).PositionalAnyCompletion(
+		git.ActionChanges(git.ChangeOpts{Unstaged: true}).FilterArgs(),
+	)
 }
