@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/rsteube/carapace"
+	"github.com/rsteube/carapace-bin/pkg/actions/text"
 	"github.com/rsteube/carapace-bin/pkg/actions/tools/git"
 	"github.com/rsteube/carapace-bridge/pkg/actions/bridge"
 	"github.com/rsteube/carapace-shlex"
@@ -255,4 +256,39 @@ func othersDescription(name string) string {
 		"unlock":                   "Unlock a file excluded from version control",
 		"utimes":                   "Change files modification time to their last commit date",
 	}[name]
+}
+
+func addPrettyFlags(cmd *cobra.Command) {
+	cmd.Flags().Bool("abbrev-commit", false, "show a prefix that names the object uniquely")
+	cmd.Flags().String("encoding", "", "re-code the commit log message in the preferred encoding")
+	cmd.Flags().Bool("expand-tabs", false, "perform a tab expansion")
+	cmd.Flags().String("format", "", "pretty-print the contents of the commit logs in a given format")
+	cmd.Flags().Bool("no-abbrev-commit", false, "show the full 40-byte hexadecimal commit object name")
+	cmd.Flags().Bool("no-expand-tabs", false, "do not expand a tab expansion")
+	cmd.Flags().Bool("no-notes", false, "do not show notes")
+	cmd.Flags().String("notes", "", "show the notes that annotate the commit")
+	cmd.Flags().Bool("oneline", false, "this is a shorthand for \"--pretty=oneline --abbrev-commit\" used together")
+	cmd.Flags().String("pretty", "", "pretty print commit message")
+	cmd.Flags().Bool("show-notes-by-default", false, "show the default notes")
+	cmd.Flags().Bool("show-signature", false, "check the validity of a signed commit object")
+
+	cmd.Flag("notes").NoOptDefVal = " "
+
+	carapace.Gen(cmd).FlagCompletion(carapace.ActionMap{
+		"encoding": text.ActionEncodings(),
+		"format":   carapace.ActionValues(), // TODO formats
+		"notes":    carapace.ActionValues(), // TODO complete refs
+		"pretty": carapace.ActionValues(
+			"email",
+			"format:",
+			"full",
+			"fuller",
+			"medium",
+			"oneline",
+			"raw",
+			"reference",
+			"short",
+			"tformat:",
+		), // TODO format: and tformat:
+	})
 }

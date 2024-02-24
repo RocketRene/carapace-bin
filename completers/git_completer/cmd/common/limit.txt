@@ -1,0 +1,144 @@
+-n, --max-count=<number>   Limit the number of commits to output
+--skip=<number>   Skip number commits before starting to show the commit output
+--since=<date>   Show commits more recent than a specific date
+--after=<date>   Show commits more recent than a specific date
+--since-as-filter=<date>   Show all commits more recent than a specific date
+--until=<date>    Show commits older than a specific date
+--before=<date>   Show commits older than a specific date
+--max-age=<timestamp>    Limit the commits output to specified time range
+--min-age=<timestamp>    Limit the commits output to specified time range
+--author=<pattern>   Limit the commits output to ones with author header lines that match the specified pattern 
+--committer=<pattern>   Limit the commits output to ones with committer header lines that match the specified pattern
+--grep-reflog=<pattern>   Limit the commits output to ones with reflog entries that match the specified pattern
+--grep=<pattern>    Limit the commits output to ones with a log message that matches the specified pattern
+--all-match    Limit the commits output to ones that match all given --grep
+--invert-grep   Limit the commits output to ones with a log message that do not match the pattern
+-i, --regexp-ignore-case    Match the regular expression limiting patterns without regard to letter case
+--basic-regexp   Consider the limiting patterns to be basic regular expressions
+-E, --extended-regexp    Consider the limiting patterns to be extended regular expressions
+-F, --fixed-strings    Consider the limiting patterns to be fixed strings
+-P, --perl-regexp     Consider the limiting patterns to be Perl-compatible regular expressions
+--remove-empty   Stop when a given path disappears from the tree
+--merges    Print only merge commits
+--no-merges    Do not print commits with more than one parent
+
+--min-parents=<number>   Show only commits which have at least that many parent commits
+--max-parents=<number>   Show only commits which have at most that many parent commits
+
+--no-min-parents    Reset min parents limit
+--no-max-parents    Reset max parents limit
+--first-parent    Follow only the first parent commit upon seeing a merge commit
+--exclude-first-parent-only   Follow only the first parent commit upon seeing a merge commit
+--not     Reverses the meaning of the ^ prefix for all following revision specifiers
+--all    Pretend as if all the refs in refs/, along with HEAD, are listed on the command line as <commit>
+--branches[=<pattern>]    Pretend as if all the refs in refs/heads are listed on the command line as <commit>
+--tags[=<pattern>]    Pretend as if all the refs in refs/tags are listed on the command line as <commit>
+--remotes[=<pattern>]    Pretend as if all the refs in refs/remotes are listed on the command line as <commit>
+--glob=<glob-pattern>    Pretend as if all the refs matching shell glob <glob-pattern> are listed on the command line as <commit>
+       --exclude=<glob-pattern>
+           Do not include refs matching <glob-pattern> that the next --all, --branches, --tags, --remotes, or --glob would otherwise
+           consider. Repetitions of this option accumulate exclusion patterns up to the next --all, --branches, --tags, --remotes, or
+           --glob option (other options or arguments do not clear accumulated patterns).
+
+           The patterns given should not begin with refs/heads, refs/tags, or refs/remotes when applied to --branches, --tags, or
+           --remotes, respectively, and they must begin with refs/ when applied to --glob or --all. If a trailing /* is intended, it
+           must be given explicitly.
+
+       --exclude-hidden=[fetch|receive|uploadpack]
+           Do not include refs that would be hidden by git-fetch, git-receive-pack or git-upload-pack by consulting the appropriate
+           fetch.hideRefs, receive.hideRefs or uploadpack.hideRefs configuration along with transfer.hideRefs (see git-config(1)).
+           This option affects the next pseudo-ref option --all or --glob and is cleared after processing them.
+
+       --reflog
+           Pretend as if all objects mentioned by reflogs are listed on the command line as <commit>.
+
+       --alternate-refs
+           Pretend as if all objects mentioned as ref tips of alternate repositories were listed on the command line. An alternate
+           repository is any repository whose object directory is specified in objects/info/alternates. The set of included objects
+           may be modified by core.alternateRefsCommand, etc. See git-config(1).
+
+       --single-worktree
+           By default, all working trees will be examined by the following options when there are more than one (see git-
+           worktree(1)): --all, --reflog and --indexed-objects. This option forces them to examine the current working tree only.
+
+       --ignore-missing
+           Upon seeing an invalid object name in the input, pretend as if the bad input was not given.
+
+       --stdin
+           In addition to getting arguments from the command line, read them from standard input as well. This accepts commits and
+           pseudo-options like --all and --glob=. When a -- separator is seen, the following input is treated as paths and used to
+           limit the result. Flags like --not which are read via standard input are only respected for arguments passed in the same
+           way and will not influence any subsequent command line arguments.
+
+       --quiet
+           Don’t print anything to standard output. This form is primarily meant to allow the caller to test the exit status to see
+           if a range of objects is fully connected (or not). It is faster than redirecting stdout to /dev/null as the output does
+           not have to be formatted.
+
+       --disk-usage, --disk-usage=human
+           Suppress normal output; instead, print the sum of the bytes used for on-disk storage by the selected commits or objects.
+           This is equivalent to piping the output into git cat-file --batch-check='%(objectsize:disk)', except that it runs much
+           faster (especially with --use-bitmap-index). See the CAVEATS section in git-cat-file(1) for the limitations of what
+           "on-disk storage" means. With the optional value human, on-disk storage size is shown in human-readable string(e.g. 12.24
+           Kib, 3.50 Mib).
+
+       --cherry-mark
+           Like --cherry-pick (see below) but mark equivalent commits with = rather than omitting them, and inequivalent ones with +.
+
+       --cherry-pick
+           Omit any commit that introduces the same change as another commit on the “other side” when the set of commits are limited
+           with symmetric difference.
+
+           For example, if you have two branches, A and B, a usual way to list all commits on only one side of them is with
+           --left-right (see the example below in the description of the --left-right option). However, it shows the commits that
+           were cherry-picked from the other branch (for example, “3rd on b” may be cherry-picked from branch A). With this option,
+           such pairs of commits are excluded from the output.
+
+       --left-only, --right-only
+           List only commits on the respective side of a symmetric difference, i.e. only those which would be marked < resp.  > by
+           --left-right.
+
+           For example, --cherry-pick --right-only A...B omits those commits from B which are in A or are patch-equivalent to a
+           commit in A. In other words, this lists the + commits from git cherry A B. More precisely, --cherry-pick --right-only
+           --no-merges gives the exact list.
+
+       --cherry
+           A synonym for --right-only --cherry-mark --no-merges; useful to limit the output to the commits on our side and mark those
+           that have been applied to the other side of a forked history with git log --cherry upstream...mybranch, similar to git
+           cherry upstream mybranch.
+
+       -g, --walk-reflogs
+           Instead of walking the commit ancestry chain, walk reflog entries from the most recent one to older ones. When this option
+           is used you cannot specify commits to exclude (that is, ^commit, commit1..commit2, and commit1...commit2 notations cannot
+           be used).
+
+           With --pretty format other than oneline and reference (for obvious reasons), this causes the output to have two extra
+           lines of information taken from the reflog. The reflog designator in the output may be shown as ref@{Nth} (where Nth is
+           the reverse-chronological index in the reflog) or as ref@{timestamp} (with the timestamp for that entry), depending on a
+           few rules:
+
+            1. If the starting point is specified as ref@{Nth}, show the index format.
+
+            2. If the starting point was specified as ref@{now}, show the timestamp format.
+
+            3. If neither was used, but --date was given on the command line, show the timestamp in the format requested by --date.
+
+            4. Otherwise, show the index format.
+
+           Under --pretty=oneline, the commit message is prefixed with this information on the same line. This option cannot be
+           combined with --reverse. See also git-reflog(1).
+
+           Under --pretty=reference, this information will not be shown at all.
+
+       --merge
+           After a failed merge, show refs that touch files having a conflict and don’t exist on all heads to merge.
+
+       --boundary
+           Output excluded boundary commits. Boundary commits are prefixed with -.
+
+       --use-bitmap-index
+           Try to speed up the traversal using the pack bitmap index (if one is available). Note that when traversing with --objects,
+           trees and blobs will not have their associated path printed.
+
+       --progress=<header>
+           Show progress reports on stderr as objects are considered. The <header> text will be printed with each progress update.
