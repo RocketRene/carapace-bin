@@ -117,7 +117,7 @@ func init() {
 		"color-moved":              git.ActionColorMovedModes(),
 		"color-moved-ws":           git.ActionColorMovedWsModes(),
 		"diff-algorithm":           git.ActionDiffAlgorithms(),
-		"diff-filter":              carapace.ActionValues(),
+		"diff-filter":              git.ActionDiffFilters().UniqueList(","),
 		"dirstat":                  carapace.ActionValues(),
 		"dirstat-by-file":          carapace.ActionValues(),
 		"dst-prefix":               carapace.ActionValues(),
